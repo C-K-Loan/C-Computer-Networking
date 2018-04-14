@@ -1,0 +1,5 @@
+Kompiliere mit "make client". Führe "./client <ip> <port> <filename>" aus.
+
+Die 'at-least-once'-Semantik macht Sinn für Hash-Tables, da die Operation
+'get', 'set', 'delete' idempotent sind, d.h. auch bei wiederholtem Ausführen
+hat die Hash-Table den selben Zustand.

@@ -1,0 +1,4 @@
+Compile with "make all". Run program with "make run" or "./client".
+The program queries 5 NTP-servers and chooses a synch server.
+It then prints the synch server domain, current time, time offset (to the synch server)
+and the corrected time.

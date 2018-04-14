@@ -1,0 +1,4 @@
+Nach mehreren Ausführungen lässt sich beobachten, dass der Stream-Socket Client in der Regel mehr Zeit benötigt als der
+Datagram-Socket Client. Dies liegt daran, dass beim verbindungsorientierten Stream-Socket Clienten zunächst ein Verbindungsaufbau
+erfolgen muss, der Zeit benötigt, ehe die Nachricht an den Server geschickt werden und das quote empfangen werden kann.
+Beim Datagram-Socket Client muss kein Verbindungsaufbau erfolgen und es kann direkt mit dem Versenden der Daten begonnen werden.

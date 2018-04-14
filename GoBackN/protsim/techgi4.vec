@@ -1,0 +1,12 @@
+vector 28  "ARQNetwork.LeftNode[0].5:127.0.0.1:12005"  "sentDataSeqNumVector"  1
+28	223.866861	0
+28	223.867842	1
+vector 25  "ARQNetwork.RightNode[0].5:127.0.0.1:12105"  "receivedDataSeqNumVector"  1
+25	224.5764658	0
+vector 23  "ARQNetwork.RightNode[0].5:127.0.0.1:12105"  "sentAckSeqNumVector"  1
+23	224.576821	1
+25	224.5790258	1
+23	224.579322	2
+vector 30  "ARQNetwork.LeftNode[0].5:127.0.0.1:12005"  "receivedAckSeqNumVector"  1
+30	225.28194356	1
+30	225.28450356	2

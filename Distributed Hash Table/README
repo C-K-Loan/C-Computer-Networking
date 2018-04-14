@@ -1,0 +1,3 @@
+Die Lösung für Aufgabe 5 wird in "server.c" implementiert.
+"make server" kompiliert den Server der dann per "./server <port>" gestartet
+werden kann.

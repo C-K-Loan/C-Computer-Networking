@@ -1,0 +1,5 @@
+./protsim.tk
+./GoBackNReceiver localhost test.out
+
+./GoBackNSender -d 10/5 localhost test.in
+

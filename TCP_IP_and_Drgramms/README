@@ -1,0 +1,3 @@
+Um die Dateien zu kompilieren führe `make all` aus.
+Der Code für Aufgabe 4 ist in `ex4.c` und das Executable ist `ex4`.
+Der Code für Aufgabe 5 ist in `ex5.c` und das Executable ist `ex5`.

@@ -1,0 +1,40 @@
+a)
+Das DHCP Protokoll ist fdafür verantwortlich, dass der Rechner eine IP-Adresse bekommt.
+Es finden sich zwei Pakete des DHCP Protokolls im Trace:
+	ein DHCP Request- und ein DHCP ACK-Paket.
+Im Request Paket ist als Source-Adresse 0.0.0.0 eingetragen, da der Rechner noch keine IP-Adresse zugewiesen bekommen hat.
+Als Destination-Adresse ist 255.255.255.255 eingetragen, um im lokalen Netz einen Broadcast durchzuführen.
+Im DHCP-ACK-Paket ist als Source-Adresse 192.168.1.1 und als Destination-Adresse 192.168.1.109 eingetragen.
+Der Rechner möchte die IP-Adresse 192.168.1.109 erhalten, da diese im Request-Paket als Requested Ip Adress" steht.
+Dieser Wunsch wird erfüllt, da als Zieladresse des ACK-Pakets eben diese Adresse eingetragen ist.
+Die Adresse ist 12 Stunden gültig, da dies der in "IP Address Lease Time" eingestellte Wert ist.
+Der in "Domain Name Server" Feld des Ack-Pakets zuständige DNS-Server ist 192.168.1.1
+
+b)
+Die Pakete 1 und 4-7 sind Pakete des ARP Protokolls und dienen der Auflösung von IP-Adressen in MAC-Adressen im lokalen Netz.
+Dabei sind die Pakte 1,4 und 6 Anfragen des betrachteten Rechners, der bestimmte Adressen auflösen möchte. In den Paketen 5 und 7 beantwortet er zwei eingehende Anfragen mit je einer MAC-Adresse.
+
+c)
+Die Anfrage per DNS findet in Paket 8 des Trace statt und enthält den Hostnamen "www.tkn.tu-berlin.de"
+Die Antwort des DNS-Servers befindet sich in Paket 9 und enthält die Antwort:
+	www.tkn.tu-berlin.de: type CNAME, class IN, cname ace-hauptblock4.tubit.tu-berlin.de
+	ace-hauptblock4.tubit.tu-berlin.de: type A, class IN, addr 130.149.7.204
+
+d)
+In Paket 13 findet die Anfrage statt:
+Es wird die URL: "www.tkn.tu-berlin.de" angefragt.
+Der Eintrag "User-Agent: Lynx/2.8.8dev.15 libwww-FM/2.14 SSL-MM/1.4.1 GNUTLS/2.12.20\r\n" lässt auf den Web-Browser Lynx schließen.
+
+Die Antwort findet sich in Paktet 19:
+Es antwortet die Apache Server-Software.
+Es handelt sich um keine persistente bzw. Keep-Alive Verbindung, da in diese Paket der Eintrag "Connection: close" steht und nicht "Connection: keep-alive".
+
+e)
+In der zweiten Verbindung wird "hyperion.tkn.tu-berlin.de" aufgelöst zu der Adresse 130.149.49.153
+Die Verbindung über TCP wird beim Client auf dem Port 39506 eingerichtet und beim Server auf dem Port 22. 
+Dies entspricht dem Secure Shell (SSH) Protokoll. Im anschließenden Datenaustausch lassen sich keine sinnvollen Daten erkennen, da eine verschlüsselte Verbindung eingerichtet wurde.
+	
+f)
+Bereits in diesem Trace wurde ersichtlich, dass wir die Nutzdaten, die im Rahmen des HTTP-Protokolls übertragen wurden, unverschlüsselt einsehen konnten.
+Auch bei anderen Protokollen wie FTP oder SMTP ist es (sofern diese auf unverschlüsselten Verbindungen basieren) ein Risiko, dass jede Person, die Zugriff auf das Netzwerk hat,
+auch auf sensible Daten im Rahmen dieser Kommunikation zugreifen kann, da diese unverschlüsselt übertragen werden.

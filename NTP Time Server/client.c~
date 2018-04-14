@@ -1,0 +1,122 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <unistd.h>
+#include <errno.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+#include <time.h>
+
+#define EXPECTED_ARGC 3
+#define PACK_LEN  12 //package_len in 32bit integers
+#define NTP_VERSION 4
+#define NTP_MODE 3
+#define NTP_HEADER (NTP_MODE << 24) | (NTP_VERSION << 27)
+
+struct ntp_timestamp {
+   uint32_t seconds;
+   uint32_t fraction;
+}
+
+struct ntp_msg {
+   uint32_t header;
+   uint32_t root_delay;
+   uint32_t root_dispersion;
+   uint32_t reference_id;
+   struct ntp_timestamp reference;
+   struct ntp_timestamp origin;
+   struct ntp_timestamp receive;
+   struct ntp_timestamp transmit;
+}
+
+int send_ntp_request(int sock, struct addrinfo *servinfo, struct ntp_timestamp *origin) {
+    // create buffer & send
+    /* send request*/
+    uint32_t package [PACK_LEN];
+    memset(package,0, sizeof(package));
+    package[0] = htonl(NTP_HEADER);
+
+    // set origin_timestamp
+    origin->seconds = (uint32_t)time();
+    origin->fraction = 0;
+ 
+    status = sendto(sock, package, sizeof package, 0, servinfo->ai_addr, servinfo->ai_protocol);
+    if (status == -1) {
+        fprintf(stderr, "send: %s\n", strerror(errno));
+        return 5;
+    }
+
+    return 0;
+}
+
+struct ntp_msg recv_ntp_response(int sock) {
+    // recv response & parse to ntp_msg struct
+    /* receive message and write to msg_buffer */
+    struct sockaddr_storage their_addr;
+    socklen_t addr_size;
+
+    char msg_buffer[PACK_LEN + 1];
+    memset(msg_buffer, 0, sizeof msg_buffer);
+    status = recvfrom(sock, msg_buffer, PACK_LEN, 0,(struct sockaddr *)&their_addr, &addr_size);
+    if (status == -1) {
+        fprintf(stderr, "recv: %s\n", strerror(errno));
+        return 6;
+    }
+    assert(status == PACK_LEN);
+    msg_buffer[status] = '\0'; /* end string */
+}
+
+int get_time(char *domain_name, char *port) {
+    int sock, status;
+    struct addrinfo hints;
+    struct addrinfo *servinfo;
+
+    memset(&hints, 0, sizeof hints); // make sure the struct is empty
+    hints.ai_family = AF_UNSPEC;     // let getaddrinfo decide which ai_family
+    hints.ai_socktype = SOCK_DGRAM; // DATAGRAM sockets
+
+    /* resolve domain name */
+    status = getaddrinfo(domain_name, port, &hints, &servinfo);
+    if (status != 0) {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
+        return 2;
+    }
+
+    sock = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol);
+    if (sock == -1) {
+        fprintf(stderr, "socket: %s\n", strerror(errno));
+        return 3;
+    }
+
+    // fixme error handling
+    send_ntp_request(sock, servinfo);
+    struct ntp_msg m = recv_ntp_response(sock);
+
+    status = close(sock);
+    freeaddrinfo(servinfo);
+    if (status == -1) {
+        fprintf(stderr, "close: %s\n", strerror(errno));
+        return 7;
+    }
+
+    uint32_t receive_time_seconds = m.receive.seconds;
+    uint32_t receive_time_fractions = m.receive.fraction;
+
+    memcpy(&receive_time_seconds,msg_buffer,sizeof(receive_time_seconds)); 
+
+    printf("%"PRIu32"\n",receive_time_seconds);
+    return 0;
+}
+
+/* this programs implements a qotd-protocol client.
+ * It expects a domain_name and a port as input parameters.
+ */
+int main(int argc, char *argv[]) {
+
+    return get_time("ntps1-0.cs.tu-berlin.de", "123");
+}
+

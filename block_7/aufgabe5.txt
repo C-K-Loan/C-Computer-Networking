@@ -1,0 +1,105 @@
+Aufgabe5:
+
+a:
+15892
+
+
+b:
+897,982 bytes
+
+c: 
+"00:0c:29:b6:b5:48"
+"00:50:56:c0:00:08"
+"00:50:56:f3:f2:f6"
+"ff:ff:ff:ff:ff:ff"
+"33:33:00:01:00:03"
+"01:00:5e:00:00:fc"
+
+d:
+53 insgesamt
+52 ipv4
+1  ipv6
+
+e:
+
+f:
+Internet Protocol Version 4: 99,68%
+Internet Protocol Version 6: 00,01%
+
+g:
+Transmission Control Protocol: 98,23%
+
+h:
+SSL
+HTTP
+
+i:
+DNS
+NetBIOS Name Service
+Dropbox LAN sync Discovery Protocol
+
+j:
+Internet Protocol Version 4
+Internet Protocol Version 6
+Adress Resolution Protocol
+
+k:
+Ethernet
+
+l:
+199
+
+m:
+TTL > 200 : 0
+TTL = 128 : 15833
+TTL = 64  : 6
+Erklärung:
+
+n:
+Größe Ethernet-Header:207-193 = 14
+Größe IP-Header: 20 bytes
+Größe IP-Datagram: 193 gesamt / 173 Nutzteil
+Größe TCP-Header: 20 bytes
+Größe TCP-Segment: 173 - 20 = 153
+  
+
+o:
+in Histogramm einfügen:
+0-19:0
+20-39: 0
+40-79: 7516
+80-159: 400
+160-319: 187
+320-639: 374
+640-1279: 231
+1280-2559: 6271
+2560-5119: 782
+5120-4294967295:0
+
+p:
+81.166.122.238 und 172.16.254.128
+10012519 bytes in 10124 packets
+
+in Histogramm einfügen:
+0-19:0
+20-39: 0
+40-79: 5422
+80-159: 0
+160-319: 4
+320-639: 3
+640-1279: 3
+1280-2559: 3833
+2560-5119: 779
+5120-4294967295:0
+
+q:
+81.166.122.238 und 172.16.254.128
+10124 packets
+
+r:
+ja mehrere. u.a.: 216.58.208.238 mit 172.16.254.128
+über TLSv1.2
+
+s:
+Ja es wurde Google-Chrome verwendet, da User-agent in trace 621:
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36\r\n
